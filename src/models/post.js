@@ -7,6 +7,10 @@ const PostSchema = new Schema(
             ref: "blogger",
             required: true,
         },
+        nameAuthor: {
+            type: String,
+            required: true,
+        },
         title: {
             type: String,
             required: true,
@@ -29,6 +33,7 @@ const PostSchema = new Schema(
                     type: String,
                     required: true,
                 },
+                default: [],
             },
         ],
     },
