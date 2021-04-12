@@ -1,8 +1,8 @@
 import { Schema, model } from "mongoose";
 
-const ViewerSchema = new Schema(
+const AdminSchema = new Schema(
     {
-        email: {
+        userName: {
             type: String,
             required: true,
         },
@@ -10,17 +10,13 @@ const ViewerSchema = new Schema(
             type: String,
             required: true,
         },
-        fullName: {
-            type: String,
-            required: true,
-        },
         role: {
             type: Number,
             required: true,
-            default: 2,
+            default: 0,
         },
     },
     { timestamps: true }
 );
 
-export const Viewer = model("viewer", ViewerSchema, "viewer");
+export const Admin = model("admin", AdminSchema, "admin");

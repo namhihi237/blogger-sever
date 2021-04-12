@@ -1,6 +1,6 @@
 import { Schema, model } from "mongoose";
 
-const ViewerSchema = new Schema(
+const BloggerSchema = new Schema(
     {
         email: {
             type: String,
@@ -23,4 +23,4 @@ const ViewerSchema = new Schema(
     { timestamps: true }
 );
 
-export const Viewer = model("viewer", ViewerSchema, "viewer");
+export const Blogger = model("blogger", BloggerSchema, "blogger");

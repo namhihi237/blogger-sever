@@ -1,4 +1,4 @@
-import { Viewer } from "../models";
+import { Viewer, Blogger } from "../models";
 import bcrypt from "bcryptjs";
 import { HttpError, tokenEncode } from "../utils";
 
@@ -8,13 +8,14 @@ const register = async (req, res, next) => {
     try {
         if (!password || !email || !fullName || !role) throw new HttpError("data is empty", 400);
         email = email.toLowerCase();
-        const user = await Viewer.findOne({ email });
-        if (user) {
+        const user1 = await Viewer.findOne({ email });
+        const user2 = await Blogger.findOne({ email });
+        if (user1 || user2) {
             throw new HttpError("The email has already been used by another account", 400);
         }
         const hash = await bcrypt.hash(password, 12);
-        await Viewer.create({ email, password: hash, role, fullName });
-
+        if (role == 1) await Viewer.create({ email, password: hash, role, fullName });
+        if (role == 2) await Blogger.create({ email, password: hash, role, fullName });
         res.status(200).json({
             status: 200,
             msg: "Sign up success",
@@ -42,6 +43,8 @@ const login = async (req, res, next) => {
         const token = tokenEncode(data);
 
         res.status(200).json({
+            status: 200,
+            msg: "Sign up success",
             role: data.role,
             token,
         });
