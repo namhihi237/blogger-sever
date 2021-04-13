@@ -9,7 +9,7 @@ export default class PostService {
 
     // get all
     async posts(conditions) {
-        return Posts.find(conditions);
+        return Posts.find(conditions, { __v: 0, createdAt: 0, updatedAt: 0 });
     }
 
     async create(data) {

@@ -30,8 +30,12 @@ const login = async (req, res, next) => {
     let { email, password } = req.body;
     email = email.toLowerCase();
     try {
-        const user = await Viewer.findOne({ email });
-        if (!user) throw new HttpError("Email or password is incorrect", 400);
+        const user1 = await Viewer.findOne({ email });
+        const user2 = await Blogger.findOne({ email });
+
+        if (!user1 && !user2) throw new HttpError("Email or password is incorrect", 400);
+        const user = user1 || user2;
+
         const match = await bcrypt.compare(password, user.password);
         if (!match) throw new HttpError("Email or password is incorrect", 400);
 

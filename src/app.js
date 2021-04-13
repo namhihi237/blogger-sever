@@ -1,11 +1,12 @@
 import { HttpServer, envVariables, dbConnection } from "./configs";
 
 const { port, mongoURI } = envVariables;
+
 import { defaultMiddleware } from "./middlewares";
 import { errorHandle } from "./middlewares";
-import { authRouter, postRouter } from "./routes";
+import { authRouter, postRouter, adminRouter } from "./routes";
 
-import {} from "./utils";
+import { initAccountAmin } from "./utils";
 export let server;
 const main = async () => {
     server = new HttpServer(port);
@@ -13,10 +14,13 @@ const main = async () => {
     server.listen();
 
     dbConnection(mongoURI);
+    await initAccountAmin();
     // api
+    server.registerRouter(adminRouter);
     server.registerRouter(authRouter);
     server.registerRouter(postRouter);
 
+    // handle error
     server.registerMiddleware(errorHandle);
 };
 main();

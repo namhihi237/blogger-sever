@@ -71,9 +71,17 @@ const deletePost = async (req, res, next) => {
     }
 };
 
+const getPostByBlogger = async (req, res, next) => {
+    try {
+    } catch (error) {
+        next(error);
+    }
+};
+
 export const postController = {
     create,
     getAll,
     update,
     deletePost,
+    getPostByBlogger,
 };

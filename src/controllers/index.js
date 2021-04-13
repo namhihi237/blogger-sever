@@ -1,3 +1,5 @@
 import { authController } from "./auth.controller";
 import { postController } from "./post.controller";
-export { authController, postController };
+import { adminController } from "./admin.contoller";
+
+export { authController, postController, adminController };
