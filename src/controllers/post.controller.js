@@ -1,14 +1,27 @@
 import { HttpError } from "../utils";
-import { Viewer, Blogger, Posts } from "../models";
+import { PostService, BloggerService } from "../services";
+
+const postService = new PostService();
+const bloggerService = new BloggerService();
+
 const create = async (req, res, next) => {
     const { _id } = req.user;
     const { title, content } = req.body;
     try {
         if (!title || !content) throw new HttpError("data is empty", 400);
-        const user = await Blogger.findById({ _id });
+        const user = await bloggerService.blogger(_id);
         if (!user) throw new HttpError("user not found", 404);
-        await Posts.create({ title, content, bloggerId: user._id, nameAuthor: user.fullName });
-        res.status();
+        await postService.create({
+            title,
+            content,
+            bloggerId: user._id,
+            nameAuthor: user.fullName,
+        });
+
+        res.status(200).json({
+            status: 200,
+            msg: "Created post success",
+        });
     } catch (error) {
         next(error);
     }
@@ -16,20 +29,41 @@ const create = async (req, res, next) => {
 
 const getAll = async (req, res, next) => {
     try {
+        const posts = await postService.posts();
+        res.status(200).json({
+            status: 200,
+            msg: "Success",
+            posts,
+        });
     } catch (error) {
         next(error);
     }
 };
 
 const update = async (req, res, next) => {
+    const { postId } = req.params;
+    const { title, content } = req.body;
     try {
+        if (!title || !content) throw new HttpError("data is empty", 400);
+        if (!(await postService.update(postId, { title, content })))
+            throw new HttpError("Post not found", 404);
+        res.status(200).json({
+            status: 200,
+            msg: "Updated post success",
+        });
     } catch (error) {
         next(error);
     }
 };
 
 const deletePost = async (req, res, next) => {
+    const { postId } = req.params;
     try {
+        if (!(await postService.deletePost(postId))) throw new HttpError("Post not found", 404);
+        res.status(200).json({
+            status: 200,
+            msg: "Deleted post success",
+        });
     } catch (error) {
         next(error);
     }
