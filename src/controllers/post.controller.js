@@ -7,6 +7,7 @@ const bloggerService = new BloggerService();
 const create = async (req, res, next) => {
     const { _id } = req.user;
     const { title, content } = req.body;
+    console.log(req.body);
     try {
         if (!title || !content) throw new HttpError("data is empty", 400);
         const user = await bloggerService.blogger(_id);

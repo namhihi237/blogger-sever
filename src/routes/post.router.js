@@ -5,10 +5,10 @@ const { jwtMidleware } = authMiddleware;
 
 export const postRouter = Router();
 
-postRouter.route("/api/v1/posts").post(jwtMidleware, postController.create);
+postRouter.route("/api/v1/posts").post(postController.create);
 
-postRouter.route("/api/v1/posts").get(jwtMidleware, postController.getAll);
+postRouter.route("/api/v1/posts").get(postController.getAll);
 
-postRouter.route("/api/v1/posts").put(jwtMidleware, postController.update);
+postRouter.route("/api/v1/posts").put(postController.update);
 
-postRouter.route("/api/v1/posts").delete(jwtMidleware, postController.deletePost);
+postRouter.route("/api/v1/posts").delete(postController.deletePost);
