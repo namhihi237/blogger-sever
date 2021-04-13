@@ -5,8 +5,8 @@ const postService = new PostService();
 const bloggerService = new BloggerService();
 
 const create = async (req, res, next) => {
-    // const { _id } = req.user;
-    const _id = "607464b985d35d00e001d484";
+    const { _id } = req.user;
+    // const _id = "607464b985d35d00e001d484";
     const { title, content } = req.body;
     console.log(req.body);
     try {
