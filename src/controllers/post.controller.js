@@ -6,9 +6,7 @@ const bloggerService = new BloggerService();
 
 const create = async (req, res, next) => {
     const { _id } = req.user;
-    // const _id = "607464b985d35d00e001d484";
     const { title, content } = req.body;
-    console.log(req.body);
     try {
         if (!title || !content) throw new HttpError("data is empty", 400);
         const user = await bloggerService.blogger(_id);
@@ -25,6 +23,7 @@ const create = async (req, res, next) => {
             msg: "Created post success",
         });
     } catch (error) {
+        console.log(error);
         next(error);
     }
 };
@@ -72,7 +71,15 @@ const deletePost = async (req, res, next) => {
 };
 
 const getPostByBlogger = async (req, res, next) => {
+    const { _id } = req.user;
+
     try {
+        const posts = await postService.posts({ bloggerId: _id });
+        res.status(200).json({
+            status: 200,
+            msg: "Success",
+            posts,
+        });
     } catch (error) {
         next(error);
     }

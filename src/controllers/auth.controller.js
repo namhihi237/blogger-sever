@@ -4,7 +4,7 @@ import { HttpError, tokenEncode } from "../utils";
 
 const register = async (req, res, next) => {
     let { password, email, fullName, role } = req.body;
-
+    console.log(role);
     try {
         if (!password || !email || !fullName || !role) throw new HttpError("data is empty", 400);
         email = email.toLowerCase();
