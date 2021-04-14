@@ -41,6 +41,20 @@ const getAll = async (req, res, next) => {
     }
 };
 
+const getPost = async (req, res, next) => {
+    const { postId } = req.params;
+    try {
+        const post = await postService.post({ _id: postId });
+        res.status(200).json({
+            status: 200,
+            msg: "Success",
+            post,
+        });
+    } catch (error) {
+        next(error);
+    }
+};
+
 const update = async (req, res, next) => {
     const { postId } = req.params;
     const { title, content } = req.body;
@@ -91,4 +105,5 @@ export const postController = {
     update,
     deletePost,
     getPostByBlogger,
+    getPost,
 };

@@ -11,6 +11,8 @@ postRouter.route("/api/v1/posts/blogger").get(jwtMidleware, postController.getPo
 
 postRouter.route("/api/v1/posts").get(postController.getAll); // no token
 
+postRouter.route("/api/v1/posts/:postId").get(postController.getPost); // no token
+
 postRouter.route("/api/v1/posts/:postId").patch(jwtMidleware, postController.update);
 
 postRouter.route("/api/v1/posts/:postId").delete(jwtMidleware, postController.deletePost);
