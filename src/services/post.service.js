@@ -2,7 +2,10 @@ import { HttpError } from "../utils";
 import { Viewer, Blogger, Posts } from "../models";
 
 import ViewerService from "./viewer.service";
+import BloggerService from "./blogger.service";
+
 const viewerService = new ViewerService();
+const bloggerService = new BloggerService();
 export default class PostService {
     // get one
     async post(conditions) {

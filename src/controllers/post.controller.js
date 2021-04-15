@@ -120,12 +120,16 @@ const commentPost = async (req, res, next) => {
     const { postId } = req.params;
     const { content } = req.body;
     try {
+        if (!content) {
+            throw new HttpError("comment is empty", 400);
+        }
         await postService.comment(_id, postId, content);
         res.status(200).json({
             status: 200,
             msg: "Success",
         });
     } catch (error) {
+        console.log(error);
         next(error);
     }
 };
