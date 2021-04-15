@@ -5,8 +5,9 @@ const { port, mongoURI } = envVariables;
 import { defaultMiddleware } from "./middlewares";
 import { errorHandle } from "./middlewares";
 import { authRouter, postRouter, adminRouter } from "./routes";
-
+import { socketService } from "./services";
 import { initAccountAmin } from "./utils";
+
 export let server;
 const main = async () => {
     server = new HttpServer(port);
@@ -22,5 +23,6 @@ const main = async () => {
 
     // handle error
     server.registerMiddleware(errorHandle);
+    server.socketEventHandler(socketService);
 };
 main();

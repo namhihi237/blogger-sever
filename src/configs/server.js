@@ -1,8 +1,16 @@
 import express from "express";
+import http from "http";
+import socketIo from "socket.io";
 export class HttpServer {
     constructor(port) {
         this.port = port;
         this.app = express();
+        this.server = http.Server(this.app);
+        this.io = socketIo(this.server, {
+            cors: {
+                origin: "*",
+            },
+        });
     }
 
     getApp() {
@@ -16,8 +24,12 @@ export class HttpServer {
         this.app.use(router);
     }
 
+    socketEventHandler(eventsHandler) {
+        eventsHandler(this.io);
+    }
+
     listen() {
-        this.app.listen(this.port, () => {
+        this.server.listen(this.port, () => {
             console.log("server is listening on port", this.port);
         });
     }
