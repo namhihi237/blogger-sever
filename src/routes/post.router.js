@@ -16,3 +16,7 @@ postRouter.route("/api/v1/posts/:postId").get(postController.getPost); // no tok
 postRouter.route("/api/v1/posts/:postId").patch(jwtMidleware, postController.update);
 
 postRouter.route("/api/v1/posts/:postId").delete(jwtMidleware, postController.deletePost);
+
+postRouter.route("/api/v1/posts/:postId/like").patch(jwtMidleware, postController.likePost);
+
+postRouter.route("/api/v1/posts/:postId/comment").patch(jwtMidleware, postController.commentPost);

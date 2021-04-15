@@ -19,17 +19,31 @@ const PostSchema = new Schema(
             type: String,
             required: true,
         },
-        like: {
-            type: Number,
-            default: 0,
-        },
-        comment: [
+        likes: [
             {
-                viewerId: {
+                userId: {
                     type: Schema.Types.ObjectId,
-                    ref: "viewer",
+                    required: true,
                 },
                 fullName: {
+                    type: String,
+                    required: true,
+                },
+                default: [],
+            },
+        ],
+
+        comments: [
+            {
+                userId: {
+                    type: Schema.Types.ObjectId,
+                    required: true,
+                },
+                fullName: {
+                    type: String,
+                    required: true,
+                },
+                content: {
                     type: String,
                     required: true,
                 },

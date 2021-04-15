@@ -1,8 +1,9 @@
 import { HttpError } from "../utils";
-import { PostService, BloggerService } from "../services";
+import { PostService, BloggerService, ViewerService } from "../services";
 
 const postService = new PostService();
 const bloggerService = new BloggerService();
+const viewerService = new ViewerService();
 
 const create = async (req, res, next) => {
     const { _id } = req.user;
@@ -99,6 +100,36 @@ const getPostByBlogger = async (req, res, next) => {
     }
 };
 
+const likePost = async (req, res, next) => {
+    const { _id } = req.user;
+    const { postId } = req.params;
+    try {
+        await postService.likeAndUnlike(_id, postId);
+
+        res.status(200).json({
+            status: 200,
+            msg: "Success",
+        });
+    } catch (error) {
+        next(error);
+    }
+};
+
+const commentPost = async (req, res, next) => {
+    const { _id } = req.user;
+    const { postId } = req.params;
+    const { content } = req.body;
+    try {
+        await postService.comment(_id, postId, content);
+        res.status(200).json({
+            status: 200,
+            msg: "Success",
+        });
+    } catch (error) {
+        next(error);
+    }
+};
+
 export const postController = {
     create,
     getAll,
@@ -106,4 +137,6 @@ export const postController = {
     deletePost,
     getPostByBlogger,
     getPost,
+    likePost,
+    commentPost,
 };
