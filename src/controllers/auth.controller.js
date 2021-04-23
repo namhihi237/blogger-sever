@@ -51,6 +51,8 @@ const login = async (req, res, next) => {
             msg: "Sign up success",
             role: data.role,
             token,
+            userId: user._id,
+            fullName: user.fullName,
         });
     } catch (error) {
         next(error);

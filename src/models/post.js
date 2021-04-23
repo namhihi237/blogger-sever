@@ -29,7 +29,6 @@ const PostSchema = new Schema(
                     type: String,
                     required: true,
                 },
-                default: [],
             },
         ],
 
@@ -51,7 +50,7 @@ const PostSchema = new Schema(
             },
         ],
     },
-    { timestamps: true }
+    { timestamps: true },
 );
 
 export const Posts = model("post", PostSchema, "post");

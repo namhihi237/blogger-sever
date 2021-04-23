@@ -41,15 +41,15 @@ export default class PostService {
         let likes = post.likes;
 
         //unlike
-        for (let like in likes) {
-            if (like.userId === userId) {
-                likes = likes.filter((e) => e.userId === userId);
+        for (let like of likes) {
+            if (like.userId == userId) {
+                likes = likes.filter((e) => e.userId != userId);
                 await Posts.findByIdAndUpdate({ _id: postId }, { likes });
                 return true;
             }
         }
         //like
-        like.push({ userId, fullName: user.fullName });
+        likes.push({ userId, fullName: user.fullName });
         await Posts.findByIdAndUpdate({ _id: postId }, { likes });
         return true;
     }
@@ -64,7 +64,7 @@ export default class PostService {
 
         await Posts.findByIdAndUpdate(
             { _id: postId },
-            { $push: { comments: { userId, fullName: user.fullName, content } } }
+            { $push: { comments: { userId, fullName: user.fullName, content } } },
         );
     }
 }

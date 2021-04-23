@@ -61,8 +61,7 @@ const update = async (req, res, next) => {
     const { title, content } = req.body;
     try {
         if (!title || !content) throw new HttpError("data is empty", 400);
-        if (!(await postService.update(postId, { title, content })))
-            throw new HttpError("Post not found", 404);
+        if (!(await postService.update(postId, { title, content }))) throw new HttpError("Post not found", 404);
         res.status(200).json({
             status: 200,
             msg: "Updated post success",
@@ -111,6 +110,7 @@ const likePost = async (req, res, next) => {
             msg: "Success",
         });
     } catch (error) {
+        console.log(error);
         next(error);
     }
 };
